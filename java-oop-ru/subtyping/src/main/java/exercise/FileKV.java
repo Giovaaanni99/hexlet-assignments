@@ -1,46 +1,49 @@
 package exercise;
 
 import java.util.Map;
+import java.util.HashMap;
 
 // BEGIN
 public class FileKV implements KeyValueStorage {
-    private String filePath;
-    private Map<String, String> storage;
-    private Map<String, String> initialData;
+    Map<String, String> map = new HashMap<>();
+    String path;
 
-    public FileKV(String filePath, Map<String, String> storage) {
-        this.filePath = filePath;
-        this.storage = storage;
-        Utils.writeFile(filePath, Utils.serialize(initialData));
+    public FileKV(String path, Map<String, String> initial) {
+        for (String s : initial.keySet()) {
+            this.map.put(s, initial.get(s));
+        }
+        this.path = path;
+        System.out.println("Written0");
+        Utils.writeFile(path, Utils.serialize(initial));
+        System.out.println("Written");
     }
 
     @Override
     public void set(String key, String value) {
-        storage.put(key, value);
-        Utils.writeFile(filePath, Utils.serialize(storage)); // обновляем файл
+        map.put(key, value);
+        Utils.writeFile(path, Utils.serialize(map));
     }
 
     @Override
     public void unset(String key) {
-        storage.remove(key);
-        Utils.writeFile(filePath, Utils.serialize(storage)); // обновляем файл
+        map.remove(key);
+        Utils.writeFile(path, Utils.serialize(map));
     }
 
     @Override
     public String get(String key, String defaultValue) {
-        if (!storage.containsKey(key)) {
+        if (map.containsKey(key)) {
+            return map.get(key);
+        } else {
             return defaultValue;
         }
-        return storage.get(key);
     }
 
-    @Override
     public Map<String, String> toMap() {
-        return storage;
-    }
-
-    private void loadData() {
-        this.storage = Utils.deserialize(Utils.readFile(filePath));
+        //return map;
+        Map<String, String> map2 = new HashMap<>();
+        map2.putAll(this.map);
+        return map2;
     }
 }
 // END

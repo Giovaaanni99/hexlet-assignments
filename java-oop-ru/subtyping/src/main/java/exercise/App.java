@@ -10,16 +10,16 @@ public class App {
     public static void swapKeyValue(KeyValueStorage kv) {
 
         Map<String, String> map2 = new HashMap<>();
-        for (Entry<String, String> s : kv.toMap().entrySet()) {
-            map2.put(s.getKey(), s.getValue());
+        for (Entry<String, String> st : kv.toMap().entrySet()) {
+            map2.put(st.getKey(), st.getValue());
         }
 
-        for (String s : map2.keySet()) {
-            kv.unset(s);
+        for (String st : map2.keySet()) {
+            kv.unset(st);
         }
 
-        for (Entry<String, String> s : map2.entrySet()) {
-            kv.set(s.getValue(), s.getKey());
+        for (Entry<String, String> st : map2.entrySet()) {
+            kv.set(st.getValue(), st.getKey());
         }
 
     }

@@ -10,12 +10,12 @@ class Circle {
         this.radius = radius;
     }
 
-    public double getSquare() throws NegativeRadiusException{
-        if(radius < 0) {
+    public double getSquare() throws NegativeRadiusException {
+        if (radius < 0) {
             throw new NegativeRadiusException("Радиус не может быть отрицательным!");
 
         }
-        double square = Math.PI * (radius*  radius);
+        double square = Math.PI * (radius * radius);
         return square;
     }
 
